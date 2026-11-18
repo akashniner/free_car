@@ -7,6 +7,7 @@ import '../widgets/income_budget_card.dart';
 import '../widgets/journey_timeline_view.dart';
 import '../widgets/schedule_table_view.dart';
 import '../widgets/strategy_customizer.dart';
+import '../widgets/variable_input_list.dart';
 import '../widgets/wealth_growth_chart.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -101,7 +102,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildHeroStatsStrip(snapshot),
                 const SizedBox(height: 20),
 
-                // 1. The Interactive 60-Month Journey Simulator
+                // 1. Dynamic Variables & Input Studio (with calculated numbers list)
+                VariableInputList(
+                  plan: _plan,
+                  onPlanChanged: (newPlan) {
+                    setState(() {
+                      _plan = newPlan;
+                      if (_selectedMonth > _plan.tenureMonths) {
+                        _selectedMonth = _plan.tenureMonths;
+                      }
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // 2. The Interactive 60-Month Journey Simulator
                 JourneyTimelineView(
                   plan: _plan,
                   selectedMonth: _selectedMonth,
